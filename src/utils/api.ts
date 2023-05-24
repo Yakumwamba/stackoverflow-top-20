@@ -1,10 +1,5 @@
 // utils/api.ts
-import axios from "axios";
 
-const apiClient = fetch(
-"https://api.stackexchange.com/2.2"
-
-);
 
 export interface User {
   user_id: number;
@@ -25,6 +20,7 @@ export const getUsers = async (): Promise<User[]> => {
   if (response.status !== 200) {
     throw new Error("Failed to fetch users data");
   }
+  
 
   const data = await response.json();
   console.log(data)
@@ -36,7 +32,7 @@ export const getUsers = async (): Promise<User[]> => {
   }));
   console.log(items)
 
-  return items;
+  return await items;
 };
 
 

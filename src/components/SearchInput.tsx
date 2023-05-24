@@ -2,16 +2,17 @@ import React, { ChangeEventHandler, useState } from "react";
 
 interface SearchInputProps {
   value: string;
-  onChange: (value: ChangeEventHandler<HTMLElement>) => void;
+  onChange: (value:  React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const SearchInput = ({ value, onChange }: SearchInputProps) => {
+const SearchInput = ({ value, onChange }: SearchInputProps)  => {
  
-  return (
+  return (  
     <input
+    className=""
       type="text"
       value={value}
-      // @ts-ignore
+   
       onChange={onChange}
     />
   );
