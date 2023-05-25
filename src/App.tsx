@@ -6,12 +6,12 @@ import Pagination from "./components/pagination";
 import useUsers from "./hooks/useUsers";
 import {User } from "./utils/types"
 
-
 import {
 
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
+import { FaBeer, FaSpinner } from "react-icons/fa";
 // interface User {
 //   name: string;
 // }
@@ -59,19 +59,32 @@ const App = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
   };
-  
+
+
   return (
 
     <QueryClientProvider client={queryClient}>
-    <div className="flex flex-col bg-black">
-      <h1>Stack Overflow Users</h1>
-      <SearchInput value={searchValue} onChange={handleChange} /> 
+    <div className="flex flex-col bg-[#3D1152] h-screen mx-20 ">
+      <div className="px-20 pt-10 items-start justify-center">
+      <h1 className="font-bold text-4xl   text-[#33CFB7]">Top 20</h1>
+      <h1 className="font-bold text-4xl text-white ">StackOverflow</h1>
+      <h1 className="font-bold text-4xl text-white ">Users</h1>
+
+    
+      </div>
+    
+      <SearchInput  /> 
 
       <UserList users={users.users} />
+     
       {/* <Pagination page={page} totalPages={users.length} onPageChange={setPage} /> */}
+      <div className="h-36 mt-20 bg-black w-full items-center  bottom-0 right-0">
+        <p className="text-white font-medium text-center">Created by Brian Lemba</p>
+      </div>
     </div>
+
     </QueryClientProvider>
-  );
+  );  
 };
 
 export default App;

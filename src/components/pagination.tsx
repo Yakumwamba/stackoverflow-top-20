@@ -1,29 +1,37 @@
 import React from "react";
+import { PaginationProps } from "../utils/types";
 
-interface PaginationProps {
-  page: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-}
 
-const Pagination = ({ page, totalPages, onPageChange }: PaginationProps) => {
-  const pages = Array(totalPages).fill(null);
-
-  pages[page - 1] = true;
-
-  return (
-    <div>
-      {pages.map((page, index) => (
+const Pagination = ({ currentPage, totalItems, itemsPerPage, onPageChange }: PaginationProps) => {
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+  
+    const handleChangePage = (newPage: any) => {
+      if (newPage >= 1 && newPage <= totalPages) {
+        onPageChange(newPage);
+      }
+    };
+  
+    return (
+      <div className="flex items-center justify-center mt-4">
         <button
-          key={index}
-          disabled={page === null}
-          onClick={() => onPageChange(index + 1)}
+          className="bg-blue-500 text-white px-3 py-1 rounded mr-2"
+          onClick={() => handleChangePage(currentPage - 1)}
+          disabled={currentPage === 1}
         >
-          {index + 1}
+          Previous
         </button>
-      ))}
-    </div>
-  );
-};
-
+        <span>
+          {currentPage} of {totalPages}
+        </span>
+        <button
+          className="bg-blue-500 text-white px-3 py-1 rounded ml-2"
+          onClick={() => handleChangePage(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </div>
+    );
+  };
+  
 export default Pagination;

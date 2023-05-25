@@ -1,12 +1,15 @@
 /* eslint-disable react/jsx-no-undef */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {User} from "../utils/types"
 
 import { getUsers } from "../utils/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { useQuery } from "@tanstack/react-query";
+import Pagination from "./pagination";
+import UserCard from "./UserCard";
 
+import { FaSpinner  } from "react-icons/fa"
 
 interface UserListProps {
   users: User[];
@@ -15,19 +18,7 @@ interface UserListProps {
 
 const UserList = ({users}: UserListProps) => {
     const queryClient = useQueryClient()
-
-    // queries
-  
-
-     // Mutations
-//   const mutation = useMutation({
-//     mutationFn: postTodo,
-//     onSuccess: () => {
-//       // Invalidate and refetch
-//       queryClient.invalidateQueries({ queryKey: ['todos'] })
-//     },
-//   })
-
+ const [currentPage, setCurrentPage] = useState(1);
 const { isLoading, error, data, isFetching } = useQuery({
     queryKey: ["users"],
     queryFn: () =>
@@ -40,39 +31,49 @@ const { isLoading, error, data, isFetching } = useQuery({
   },  [queryClient])
 
   if (isLoading) {
-   return (<p>Data loading</p>);
+   return (
+   
+    <div className="flex flex-row self-center justify-center items-center gap-2 align-middle">
+   <FaSpinner color="white" size={25}  className=" animate-spin"/>
+
+<p className="flex  items-center  text-white font-bold">Data loading</p>;
+</div>)
   }
   if (isFetching) {
-(<p>Data fetching</p> )
+(
+    <div className="">
+        <FaSpinner size={50} />
+<p className="text-white font-bold">Data fetching</p> 
+    </div>
+
+ )
   }
   if (error) {
   (<p>Error loading data </p>)
   }
 
-  const  onClickUser =  (id: any) => {
-console.log("Clicked", id )
-  }
+
+
+
+  const handlePageChange = (newPage:any) => {
+    setCurrentPage(newPage);
+  };
+
+  const paginatedData = users.slice((currentPage - 1) * 8, currentPage * 8);
+
   return (
-    <>  
-<div className="flex flex-col bg-gray-400 w-full h-auto">
-
-{data?.map((user) => (
     
-    <div key={user.user_id} className="flex flex-row justify-between w-full" onClick={onClickUser}>
-        <div className={"flex bg-black bg-[url] rounded-full w-auto h-auto "}>
-            <img src={user.profile_image} alt="" className="flex rounded-full" width={100} height={100} />
-        </div>
-        <p className="text-lg">{ user.display_name}</p>
-        <p> { user.reputation}</p>
-    <hr className="h-0.5 bg-black w-full" />
-    </div>
-
-  ))}
-</div>
-
-  
-    </>
-    
+    <div className="flex flex-col bg-white w-full  h-auto">
+    {paginatedData.map((user) => (
+      <UserCard key={user.user_id} user={user} />
+    ))}
+    <Pagination
+      currentPage={currentPage}
+      totalItems={users.length}
+      itemsPerPage={8}
+      onPageChange={handlePageChange}
+    />
+  </div>
   );
 };
 
