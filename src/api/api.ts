@@ -20,7 +20,7 @@ export interface ApiResponse {
 
 export const getUsers = async (): Promise<User[]> => {
   const proxyUrl = "https://my-cors-proxy.herokuapp.com/";
-  const apiUrl = "http://api.stackexchange.com/2.2/users?pagesize=20&order=desc&sort=reputation&site=stackoverflow";
+  const apiUrl = "https://api.stackexchange.com/2.2/users?pagesize=20&order=desc&sort=reputation&site=stackoverflow";
   // Check if the users array exists in localStorage
    const storedUsers = localStorage.getItem("users");
   if (storedUsers !== null) {
