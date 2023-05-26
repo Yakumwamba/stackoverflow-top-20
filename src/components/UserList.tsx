@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /*        State variables are defined and initialized., such as currentPage, searchTerm, and searchResults.
           The useQuery hook is used to fetch users.
           The useEffect hooks are used to update the searchResults and noResults states.
@@ -45,7 +46,7 @@ const UserList = ({ users }: any[]) => {
   }, [searchTerm, searchUsers]);
 
   // Set noResults state when searchResults array is empty
-  useEffect(() => {
+  useEffect(() => { 
     setNoResults(searchResults.length === 0);
   }, [searchResults]);
 

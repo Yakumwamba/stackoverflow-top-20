@@ -9,6 +9,7 @@ import useStoredUsers from "./hooks/useStoredUsers";
 import Footer from "./components/Footer";
 import NavBar from "./components/NavBar";
 
+
 // Instantiate a new QueryClient
 const queryClient = new QueryClient();
 
@@ -16,7 +17,8 @@ const queryClient = new QueryClient();
 const App = () => {
   // State variables
   const [filteredData, setFilteredData] = useState();
-  const [users] = useStoredUsers();
+  // const users = useUsers()
+  const [users, setStoredUsers] = useStoredUsers();
   const { isOnline } = useInternetConnectivity();
 
   // Update the state when the online status changes
