@@ -1,3 +1,5 @@
+
+
 // Import required modules and components
 import React, { useEffect, useState } from "react";
 import UserList from "./components/UserList";
@@ -8,6 +10,7 @@ import { toast } from "react-toastify";
 import useStoredUsers from "./hooks/useStoredUsers";
 import Footer from "./components/Footer";
 import NavBar from "./components/NavBar";
+import useUsers from "./hooks/useUsers";
 
 
 // Instantiate a new QueryClient
@@ -17,15 +20,15 @@ const queryClient = new QueryClient();
 const App = () => {
   // State variables
   const [filteredData, setFilteredData] = useState();
-  // const users = useUsers()
-  const [users, setStoredUsers] = useStoredUsers();
+   const users = useUsers()
+  //const [users, setStoredUsers] = useStoredUsers();
   const { isOnline } = useInternetConnectivity();
 
   // Update the state when the online status changes
   useEffect(() => {
     if (isOnline) {
       console.log("App is online");
-      toast("You are back online");
+     
     } else {
       console.log("App is offline");
       toast("Check internet connection");
@@ -40,7 +43,7 @@ const App = () => {
           <div className="bg-black h-full">
             <NavBar />
             {/* @ts-ignore */}
-            <UserList users={users} />
+            <UserList users={users.users} />
             <Footer />
           </div>
         ) : (

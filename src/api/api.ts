@@ -19,8 +19,10 @@ export interface ApiResponse {
 
 
 export const getUsers = async (): Promise<User[]> => {
-   // Check if the users array exists in localStorage
-   const storedUsers = localStorage.getItem("users");
+  const proxyUrl = "https://my-cors-proxy.herokuapp.com/";
+  const apiUrl = "https://api.stackoverflow.com/2.2/users?pagesize=20&order=desc&sort=reputation&site=stackoverflow";
+  // Check if the users array exists in localStorage
+  const storedUsers = localStorage.getItem("users");
   if (storedUsers !== null) {
     // If users are found in localStorage, return the stored users
     const items: User[] = JSON.parse(storedUsers);
@@ -29,7 +31,7 @@ export const getUsers = async (): Promise<User[]> => {
 
   // If users are not found in localStorage, fetch the data from the API
   const response = await fetch(
-    "https://api.stackoverflow.com/2.2/users?pagesize=20&order=desc&sort=reputation&site=stackoverflow"
+    apiUrl + proxyUrl
   );
 
   if (response.status !== 200) {

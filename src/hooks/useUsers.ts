@@ -10,7 +10,7 @@ const useUsers = () => {
       console.log("Data before after parse ", data)
       return setUsers(data);
     });
-  }, []);
+  }, [users]);
 
   return {
     users,

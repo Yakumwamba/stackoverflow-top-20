@@ -1,14 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/*        State variables are defined and initialized., such as currentPage, searchTerm, and searchResults.
-          The useQuery hook is used to fetch users.
-          The useEffect hooks are used to update the searchResults and noResults states.
-          The component renders a loading indicator, an error message, or the search results based on the current state.
-          The handleSearchChange and handlePageChange functions are used to handle search input changes and page changes in pagination.
-          The Pagination component is rendered to handle pagination.
-          The Toast component is rendered for displaying notifications. */
 
 /* Import required modules and components */
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { User } from "../types/types";
 import { getUsers } from "../api/api";
 import { useQuery } from "@tanstack/react-query";
@@ -29,7 +22,7 @@ const UserList = ({ users }: any[]) => {
   const [noResults, setNoResults] = useState(false);
 
   // Use the useQuery hook to fetch users
-  const { isLoading, error, isFetching } = useQuery({
+  const { isLoading, error, } = useQuery({
     queryKey: ["users"],
     queryFn: () => getUsers(),
   });
