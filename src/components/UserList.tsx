@@ -3,12 +3,10 @@
 /* Import required modules and components */
 import { useEffect, useState } from "react";
 import { User } from "../types/types";
-import { getUsers } from "../api/api";
-import { useQuery } from "@tanstack/react-query";
 import Pagination from "./pagination";
 import UserCard from "./UserCard";
 import { FaSpinner } from "react-icons/fa";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer, } from "react-toastify";
 import SearchInput from "./SearchInput";
 
 // Define UserList component
@@ -20,12 +18,7 @@ const UserList = ({ users }: any[]) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<User[]>([]);
   const [noResults, setNoResults] = useState(false);
-
   // Use the useQuery hook to fetch users
-  const { isLoading, error, } = useQuery({
-    queryKey: ["users"],
-    queryFn: () => getUsers(),
-  });
 
   // Search users by the searchTerm
   const searchUsers = (searchTerm: string): User[] =>
@@ -35,28 +28,30 @@ const UserList = ({ users }: any[]) => {
 
   // Update searchResults state when searchTerm or searchUsers function changes
   useEffect(() => {
-    setSearchResults(searchUsers(searchTerm));
-  }, [searchTerm, searchUsers]);
+     setSearchResults(searchUsers(searchTerm));
+    console.log("Here checking..")
+  }, [searchTerm]);
 
-  // Set noResults state when searchResults array is empty
+  // // Set noResults state when searchResults array is empty
   useEffect(() => { 
     setNoResults(searchResults.length === 0);
-  }, [searchResults]);
+  
+  }, [searchUsers]);
 
   // Render loading indicator if data is being fetched
-  if (isLoading) {
+  if (!users) {
     return (
       <div className="flex flex-row self-center h-auto flex-grow justify-center items-center gap-2 align-middle">
         <FaSpinner color="white" size={25} className="animate-spin" />
-        <p className="flex items-center text-white font-bold">Data loading</p>
+        <p className="flex items-center text-white font-bold">Fetching users...</p>
       </div>
     );
   }
 
   // Render an error message if there's an error
-  if (error) {
-    toast("Error fetching data...");
-  }
+  // if (error) {
+  //   toast("Error fetching data...");
+  // }
 
   // Handle search input changes
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,9 +72,7 @@ const UserList = ({ users }: any[]) => {
   // Render the UserList component
   return (
     <div
-      className={`flex flex-col ${
-        isLoading ? "hidden" : ""
-      } lg:px-20 bg-black w-full pb-5`}
+      className={`flex flex-col lg:px-20 bg-black w-full pb-5`}
     >
       <SearchInput value={searchTerm} onChange={handleSearchChange} />
       {/* Render noResults message if there are no search results */}
@@ -100,7 +93,7 @@ const UserList = ({ users }: any[]) => {
         totalItems={users.length}
         itemsPerPage={8}
         onPageChange={handlePageChange}
-      />
+      />  
       {/* Render Toast component for displaying notifications */}
       <ToastContainer
         position="bottom-center"
@@ -119,3 +112,5 @@ const UserList = ({ users }: any[]) => {
 };
 
 export default UserList;
+
+

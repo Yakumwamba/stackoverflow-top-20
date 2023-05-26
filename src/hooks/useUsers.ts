@@ -7,10 +7,11 @@ const useUsers = () => {
 
   useEffect(() => {
     getUsers().then((data) => {
-      console.log("Data before after parse ", data)
-      return setUsers(data);
+      
+      setUsers(data)
+      // return setUsers(data);
     });
-  }, [users]);
+  }, []);
 
   return {
     users,
