@@ -52,7 +52,7 @@ nvm use 18`
 
 Documentation to some of the functions that I made use of.
 
-## `useUsers` hook
+## useUsers hook
 
 The `useUsers` custom hook is a React hook that manages an array of user objects fetched from an API. It initializes the state with an empty array and updates the state with the fetched user data when the component mounts.
 
@@ -64,11 +64,11 @@ The `UserList` component accepts the following props:
 
 To use the `UserList` component, pass the `users` prop, and the component will automatically display the searchable user list with pagination and notifications.
 
-## `UserCard` **Component**
+## UserCard **Component**
 
 The `UserCard` component is a reusable user card component designed to display user information, reputation, and actions for following, unfollowing, and blocking users. It is a feature-rich and customizable component that provides a visually appealing way to display user information and interact with users on your platform.
 
-## `SearchInput`
+## SearchInput
 
 The `SearchInput` component accepts the following props:
 
@@ -77,9 +77,9 @@ The `SearchInput` component accepts the following props:
 
 To use the `SearchInput` component, pass the `value` and `onChange` props, and handle the `onChange` event in your component to update the state or perform any filtering actions based on the user input.
 
-## `useStoredUsers` hook
+## useStoredUsers hook
 
-The `useStoredUsers` hook returns an array of user objects and a function to update the users array.
+The useStoredUsers hook returns an array of user objects and a function to update the users array.
 
 1. Call the hook within a functional component:
 
@@ -102,7 +102,7 @@ The `useStoredUsers` hook returns an array of user objects and a function to u
 // Example usage of setUsers function
 setUsers([...users, newUser]);`
 
-## `useInternetConnectivity` Hook
+## useInternetConnectivity Hook
 
 The `useInternetConnectivity` hook utilizes the `useState` and `useEffect` hooks from React to manage the `isOnline` state and update it based on the user's network connectivity status. It listens to the `online` and `offline` events on the `window` object and updates the `isOnline` state accordingly. When the user's connection status changes, the `toast` function from the `react-toastify` library is used to display a notification informing the user of the change in their connectivity status.
 

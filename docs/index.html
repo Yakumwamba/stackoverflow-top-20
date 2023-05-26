@@ -12,20 +12,91 @@
 <div class="col-content">
 <div class="tsd-page-title">
 <h2>world-remmit</h2></div>
-<div class="tsd-panel tsd-typography"><a id="md:getting-started-with-create-react-app" class="tsd-anchor"></a><h1><a href="#md:getting-started-with-create-react-app">Getting Started with Create React App</a></h1><p>This project was bootstrapped with <a href="https://github.com/facebook/create-react-app">Create React App</a>.</p>
-<a id="md:available-scripts" class="tsd-anchor"></a><h2><a href="#md:available-scripts">Available Scripts</a></h2><p>In the project directory, you can run:</p>
-<a id="md:npm-start" class="tsd-anchor"></a><h3><a href="#md:npm-start"><code>npm start</code></a></h3><p>Runs the app in the development mode.<br>Open <a href="http://localhost:3000">http://localhost:3000</a> to view it in the browser.</p>
-<p>The page will reload if you make edits.<br>You will also see any lint errors in the console.</p>
-<a id="md:npm-test" class="tsd-anchor"></a><h3><a href="#md:npm-test"><code>npm test</code></a></h3><p>Launches the test runner in the interactive watch mode.<br>See the section about <a href="https://facebook.github.io/create-react-app/docs/running-tests">running tests</a> for more information.</p>
-<a id="md:npm-run-build" class="tsd-anchor"></a><h3><a href="#md:npm-run-build"><code>npm run build</code></a></h3><p>Builds the app for production to the <code>build</code> folder.<br>It correctly bundles React in production mode and optimizes the build for the best performance.</p>
-<p>The build is minified and the filenames include the hashes.<br>Your app is ready to be deployed!</p>
-<p>See the section about <a href="https://facebook.github.io/create-react-app/docs/deployment">deployment</a> for more information.</p>
-<a id="md:npm-run-eject" class="tsd-anchor"></a><h3><a href="#md:npm-run-eject"><code>npm run eject</code></a></h3><p><strong>Note: this is a one-way operation. Once you <code>eject</code>, you can’t go back!</strong></p>
-<p>If you aren’t satisfied with the build tool and configuration choices, you can <code>eject</code> at any time. This command will remove the single build dependency from your project.</p>
-<p>Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except <code>eject</code> will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.</p>
-<p>You don’t have to ever use <code>eject</code>. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.</p>
-<a id="md:learn-more" class="tsd-anchor"></a><h2><a href="#md:learn-more">Learn More</a></h2><p>You can learn more in the <a href="https://facebook.github.io/create-react-app/docs/getting-started">Create React App documentation</a>.</p>
-<p>To learn React, check out the <a href="https://reactjs.org/">React documentation</a>.</p>
+<div class="tsd-panel tsd-typography"><a id="md:top-20-stack-overflow-users" class="tsd-anchor"></a><h1><a href="#md:top-20-stack-overflow-users"><strong>Top 20 Stack Overflow Users</strong></a></h1><p>This application fetches the top 20 Stack Overflow users and displays them using the <code>UserList</code> component. Inside <code>UserList</code>, there is a <code>UserCard</code> that gets rendered as a call to the API is made. The call to the API is cached such that when the first request is made, the response is stored in <code>localStorage</code>. This avoids the application from making too many API requests, thus improving performance and speed. The application uses Framer Motion for the display of <code>UserCard</code> in the <code>UserList</code> component. The user card, upon tap, expands, displaying the follow and block buttons.</p>
+<p>Please note that the follow and block buttons in the application do not make any API calls, and they are only indicators for simulation purposes.</p>
+<a id="md:prerequisites" class="tsd-anchor"></a><h2><a href="#md:prerequisites"><strong>Prerequisites</strong></a></h2><ul>
+<li>Node version 18</li>
+<li>React 18</li>
+<li>Documentation</li>
+<li>Use TypeScript</li>
+</ul>
+<a id="md:installation" class="tsd-anchor"></a><h2><a href="#md:installation"><strong>Installation</strong></a></h2><ol>
+<li>Ensure that you have Node.js version 18 installed. You can use <del><a href="https://github.com/nvm-sh/nvm">nvm</a></del> to manage your Node.js versions:</li>
+</ol>
+<p><code>nvm install 18 nvm use 18</code></p>
+<ol start="2">
+<li>Install the dependencies:</li>
+</ol>
+<p><code>yarn install</code></p>
+<ol start="3">
+<li>Start the application:</li>
+</ol>
+<p><code>yarn start</code></p>
+<a id="md:key-requirements" class="tsd-anchor"></a><h2><a href="#md:key-requirements"><strong>Key Requirements</strong></a></h2><ul>
+<li><a href="http://Readme.md">Readme.md</a> ✅</li>
+<li>React 18 ✅</li>
+<li>Documentation ✅</li>
+<li>Use TypeScript ✅</li>
+<li>Testing ❌</li>
+</ul>
+<a id="md:duration-of-project" class="tsd-anchor"></a><h2><a href="#md:duration-of-project"><strong>Duration of Project</strong></a></h2><ul>
+<li>Review: 0.5 hours</li>
+<li>Design: 0.5 hours</li>
+<li>Implementation: 1.5 hours</li>
+<li>Testing: Not performed due to time constraints ❌</li>
+<li>Documentation: 0.5 hours</li>
+</ul>
+<a id="md:optional-bonus-points" class="tsd-anchor"></a><h2><a href="#md:optional-bonus-points"><strong>Optional Bonus Points</strong></a></h2><ul>
+<li>Implement filtering / search input ✅</li>
+<li>Caching Strategy ✅</li>
+<li>Add pagination ✅</li>
+</ul>
+<a id="md:documentation" class="tsd-anchor"></a><h1><a href="#md:documentation">Documentation</a></h1><p>Documentation to some of the functions that I made use of.</p>
+<a id="md:useusers-hook" class="tsd-anchor"></a><h2><a href="#md:useusers-hook"><code>useUsers</code> hook</a></h2><p>The <code>useUsers</code> custom hook is a React hook that manages an array of user objects fetched from an API. It initializes the state with an empty array and updates the state with the fetched user data when the component mounts.</p>
+<a id="md:userlist" class="tsd-anchor"></a><h2><a href="#md:userlist"><code>UserList</code></a></h2><p>The <code>UserList</code> component accepts the following props:</p>
+<ul>
+<li><code>users</code>: Represents an array of user objects containing user information such as <code>user_id</code>, <code>display_name</code>, and <code>profile_image</code>.</li>
+</ul>
+<p>To use the <code>UserList</code> component, pass the <code>users</code> prop, and the component will automatically display the searchable user list with pagination and notifications.</p>
+<a id="md:usercard-component" class="tsd-anchor"></a><h2><a href="#md:usercard-component"><code>UserCard</code> <strong>Component</strong></a></h2><p>The <code>UserCard</code> component is a reusable user card component designed to display user information, reputation, and actions for following, unfollowing, and blocking users. It is a feature-rich and customizable component that provides a visually appealing way to display user information and interact with users on your platform.</p>
+<a id="md:searchinput" class="tsd-anchor"></a><h2><a href="#md:searchinput"><code>SearchInput</code></a></h2><p>The <code>SearchInput</code> component accepts the following props:</p>
+<ul>
+<li><code>value</code>: Represents the current input value.</li>
+<li><code>onChange</code>: Callback function invoked when the input value changes.</li>
+</ul>
+<p>To use the <code>SearchInput</code> component, pass the <code>value</code> and <code>onChange</code> props, and handle the <code>onChange</code> event in your component to update the state or perform any filtering actions based on the user input.</p>
+<a id="md:usestoredusers-hook" class="tsd-anchor"></a><h2><a href="#md:usestoredusers-hook"><code>useStoredUsers</code> hook</a></h2><p>The <code>useStoredUsers</code> hook returns an array of user objects and a function to update the users array.</p>
+<ol>
+<li>Call the hook within a functional component:</li>
+</ol>
+<p>`const UsersList = () =&gt; {
+  const [users, setUsers] = useStoredUsers();</p>
+<p>  // You can now use the users array and setUsers function in your component
+  // ...</p>
+<p>  return (
+    // Your component JSX
+  );
+};`</p>
+<ol start="2">
+<li>Use the <code>users</code> array and <code>setUsers</code> function to manage the stored users in your component:</li>
+</ol>
+<p>`// Example usage of users array
+{users.map((user) =&gt; <div key={user.user_id}>{user.display_name}</div>)}</p>
+<p>// Example usage of setUsers function
+setUsers([...users, newUser]);`</p>
+<a id="md:useinternetconnectivity-hook" class="tsd-anchor"></a><h2><a href="#md:useinternetconnectivity-hook"><code>useInternetConnectivity</code> Hook</a></h2><p>The <code>useInternetConnectivity</code> hook utilizes the <code>useState</code> and <code>useEffect</code> hooks from React to manage the <code>isOnline</code> state and update it based on the user&#39;s network connectivity status. It listens to the <code>online</code> and <code>offline</code> events on the <code>window</code> object and updates the <code>isOnline</code> state accordingly. When the user&#39;s connection status changes, the <code>toast</code> function from the <code>react-toastify</code> library is used to display a notification informing the user of the change in their connectivity status.</p>
+<a id="md:pagination" class="tsd-anchor"></a><h2><a href="#md:pagination"><strong>Pagination</strong></a></h2><p>The pagination component accepts the following props:</p>
+<ul>
+<li><code>currentPage</code>: Represents the current active page (1-based index).</li>
+<li><code>totalItems</code>: Represents the total number of items.</li>
+<li><code>itemsPerPage</code>: Represents the maximum number of items visible in a single page.</li>
+<li><code>onPageChange</code>: Callback function invoked with the updated page value when the page is changed.</li>
+</ul>
+<p>The pagination component calculates the total number of pages and handles page changes by updating the <code>currentPage</code> state. The component also displays the current page and total pages, along with the &quot;Previous&quot; and &quot;Next&quot; buttons to navigate between pages.</p>
+<a id="md:ux-library-research" class="tsd-anchor"></a><h2><a href="#md:ux-library-research"><strong>UX Library Research</strong></a></h2><ul>
+<li>Framer Motion</li>
+</ul>
+<p>This project was developed within 2.5 hours due to time constraints. Unit tests were not added to this application.</p>
 </div></div>
 <div class="col-sidebar">
 <div class="page-menu">
@@ -48,17 +119,25 @@
 <ul>
 <li>
 <ul>
-<li><a href="#md:getting-started-with-create-react-app"><span>Getting <wbr/>Started with <wbr/>Create <wbr/>React <wbr/>App</span></a></li>
+<li><a href="#md:top-20-stack-overflow-users"><span>Top 20 <wbr/>Stack <wbr/>Overflow <wbr/>Users</span></a></li>
 <li>
 <ul>
-<li><a href="#md:available-scripts"><span>Available <wbr/>Scripts</span></a></li>
+<li><a href="#md:prerequisites"><span>Prerequisites</span></a></li>
+<li><a href="#md:installation"><span>Installation</span></a></li>
+<li><a href="#md:key-requirements"><span>Key <wbr/>Requirements</span></a></li>
+<li><a href="#md:duration-of-project"><span>Duration of <wbr/>Project</span></a></li>
+<li><a href="#md:optional-bonus-points"><span>Optional <wbr/>Bonus <wbr/>Points</span></a></li></ul></li>
+<li><a href="#md:documentation"><span>Documentation</span></a></li>
 <li>
 <ul>
-<li><a href="#md:npm-start"><span>npm start</span></a></li>
-<li><a href="#md:npm-test"><span>npm test</span></a></li>
-<li><a href="#md:npm-run-build"><span>npm run build</span></a></li>
-<li><a href="#md:npm-run-eject"><span>npm run eject</span></a></li></ul></li>
-<li><a href="#md:learn-more"><span>Learn <wbr/>More</span></a></li></ul></li></ul></li></ul></div></details></div>
+<li><a href="#md:useusers-hook"><span>use<wbr/>Users hook</span></a></li>
+<li><a href="#md:userlist"><span>User<wbr/>List</span></a></li>
+<li><a href="#md:usercard-component"><span>User<wbr/>Card <wbr/>Component</span></a></li>
+<li><a href="#md:searchinput"><span>Search<wbr/>Input</span></a></li>
+<li><a href="#md:usestoredusers-hook"><span>use<wbr/>Stored<wbr/>Users hook</span></a></li>
+<li><a href="#md:useinternetconnectivity-hook"><span>use<wbr/>Internet<wbr/>Connectivity <wbr/>Hook</span></a></li>
+<li><a href="#md:pagination"><span>Pagination</span></a></li>
+<li><a href="#md:ux-library-research"><span>UX <wbr/>Library <wbr/>Research</span></a></li></ul></li></ul></li></ul></div></details></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="modules.html" class="current"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-namespace)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-4-path"></rect><path d="M9.33 16V7.24H10.77L13.446 14.74C13.43 14.54 13.41 14.296 13.386 14.008C13.37 13.712 13.354 13.404 13.338 13.084C13.33 12.756 13.326 12.448 13.326 12.16V7.24H14.37V16H12.93L10.266 8.5C10.282 8.692 10.298 8.936 10.314 9.232C10.33 9.52 10.342 9.828 10.35 10.156C10.366 10.476 10.374 10.784 10.374 11.08V16H9.33Z" fill="var(--color-text)" id="icon-4-text"></path></svg><span>world-<wbr/>remmit</span></a>
 <ul class="tsd-small-nested-navigation"></ul></nav></div></div></div>
