@@ -1,80 +1,113 @@
 import { useState } from "react";
-import { SlUserFollow,  } from "react-icons/sl"
-import { BiBlock, BiCircle} from "react-icons/bi"
-// @ts-ignore
-const UserCard = ({ user }) => {
-    const [expanded, setExpanded] = useState(false);
-    const [followed, setFollowed] = useState(false);
-    const [blocked, setBlocked] = useState(false);
-  
-    const toggleFollow = () => {
-      setFollowed(!followed);
-    };
-  
-    const blockUser = () => {
-      setBlocked(true);
-    };
-  
-    const onClickUser = () => {
-      if (!blocked) {
-        setExpanded(!expanded);
-      }
-    };
-    function formatReputation(num: number): string {
-        let formattedNum = parseFloat(num.toFixed(2));
-        let suffix = '';
-      
-        if (num >= 1000000) {
-          formattedNum /= 1000000;
-          suffix = 'M';
-        } else if (num >= 1000) {
-          formattedNum /= 1000;
-          suffix = 'K';
-        }
-      
-        return formattedNum.toFixed(2) + suffix;
-      }
-  
-      return (
-        <div
-        key={user.user_id}
-        className={`flex flex-col hover:cursor-pointer justify-between w-full ${blocked ? 'bg-gray-200' : ''}`}
-        onClick={onClickUser}
-      >
-        <div className="flex flex-row items-center gap-5  my-5">
-          <div className="flex bg-black rounded-full w-auto h-auto">
-            <img src={user.profile_image} alt="" className="flex rounded-full" width={100} height={100} />
-          </div>
-  
-          <div className="flex flex-col ">
-            <p className="text-2xl font-bold text-[#33CFB7]">{user.display_name}</p>
-            
-            <div className="flex flex-row items-center ">
+import { SlUserFollow,SlUserFollowing, SlUserUnfollow } from "react-icons/sl"
+import { BiBlock, BiStar} from "react-icons/bi"
+import {  toast } from "react-toastify";
+import Avater from "./Avater";
+import { formatReputation } from "../utils/utils";
 
-            <BiCircle size={20} fontWeight={"bold"} color="green"  />
-            <p className="font-bold text-xl"> {formatReputation(user.reputation)}</p>
+
+import { motion } from "framer-motion";
+
+// function AnimatedCard() {
+    const cardVariants = {
+        hidden: { opacity: 0, y: 50 },
+        visible: { opacity: 1, y: 0 },
+    };
+
+
+
+   const UserCard = ({ user }: any) => {
+        const [expanded, setExpanded] = useState(false);
+        const [followed, setFollowed] = useState(false);
+        const [blocked, setBlocked] = useState(false);
+
+        const toggleFollow = (user: string) => {
+            setFollowed(!followed);
+            if (!followed) {
+                toast(`You followed ${user} `);
+            } else {
+                toast(`You unfollowed ${user} `);
+            }
+
+
+        };
+
+        const blockUser = (username: string) => {
+            setBlocked(true);
+            setFollowed(false);
+            user.blocked = true;
+            if (!blocked) {
+                toast(`You blocked ${username} `);
+            }
+        };
+
+        const onClickUser = () => {
+            if (!blocked) {
+                setExpanded(!expanded);
+            }
+        };
+
+
+
+        return (
+            <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={cardVariants}
+            transition={{ duration: 0.3 }}
+            className="card"
+          >
+           <div
+                key={user.user_id}
+                className={`flex flex-col sm:scale-75 rounded-sm drop-shadow-sm shadow-sm p-5 shadow-primary  hover:cursor-pointer justify-between w-full ${blocked ? 'bg-gray-400' : 'bg-gray-100'}`}
+                onClick={onClickUser}
+            >
+                <div className="flex flex-row items-center justify-between  gap-5  my-5">
+                    <Avater image={user.profile_image} following={followed} blocked={blocked} />
+
+                    <div className="flex flex-col gap-1 ">
+                        <p className="text-3xl font-bold text-primary">{user.display_name}</p>
+
+                        <div className="flex flex-row items-center gap-2 justify-end ">
+
+                            <BiStar size={20} fontWeight={"bold"} color="green" />
+                            <p className="font-normal text-xl text-primary"> {formatReputation(user.reputation)}</p>
+                        </div>
+                        <div className={`flex flex-row gap-1 items-end justify-end ${followed ? '' : 'hidden'} `}>
+                            <p className="text-xl sm:self-end font-light italic "> Following</p>
+                            <SlUserFollowing color="green" className={`${followed ? 'self-end ' : 'hidden'}`} size={25} />
+                        </div>
+                        <div className={`flex flex-row gap-1 items-end justify-end ${blocked ? '' : 'hidden'} `}>
+                            <p className="text-xl sm:self-end font-light italic"> Blocked</p>
+                            <BiBlock color="red" className={`${blocked ? 'self-end ' : 'hidden'}`} size={25} />
+                        </div>
+
+                    </div>
+                </div>
+
+                {expanded && (
+                    <div className="flex flex-row mt-4 my-5 justify-end w-auto">
+                        <button className={`follow-btn ${followed ? 'bg-white text-primary' : 'bg-primary text-white'} items-center gap-2 flex flex-row px-4 py-2  border-2 border-[#3D1152]  font-semibold rounded`} onClick={() => toggleFollow(user.display_name)}>
+
+                            {followed ? <SlUserUnfollow size={20} /> : <SlUserFollow size={20} />}
+                            {followed ? 'Unfollow' : 'Follow'}
+                        </button>
+                        <button className="block-btn items-center flex flex-row gap-2 px-4 py-2 bg-gray-300 text-white rounded ml-2" onClick={() => blockUser(user.display_name)}>
+                            <BiBlock size={20} />
+                            Block
+                        </button>
+                    </div>
+                )}
+
+
+
             </div>
-          </div>
-        </div>
-  
-        {expanded && (
-          <div className="flex flex-row mt-4 my-5 w-auto">
-            <button className="follow-btn items-center gap-2 flex flex-row px-4 py-2 bg-[#3D1152] border-2 border-[#3D1152] text-white font-semibold rounded" onClick={toggleFollow}>
-            <SlUserFollow size={20} />
-              {followed ? 'Unfollow' : 'Follow'}
-            </button>
-            <button className="block-btn items-center flex flex-row gap-2 px-4 py-2 bg-gray-300 text-white rounded ml-2" onClick={blockUser}>
-            <BiBlock size={20} />
-              Block
-            </button>
-          </div>
-        )}
-  
-        <div>
-          <hr className="h-0.5 bg-gray-700 w-full" />
-        </div>
-      </div>
-      );
-  };
+          </motion.div>
+           
 
-  export default UserCard;
+        );
+    };
+
+    export default UserCard;
+
+

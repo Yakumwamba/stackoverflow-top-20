@@ -1,29 +1,23 @@
-import React, { ChangeEventHandler, useState } from "react";
-import { FaSearch } from "react-icons/fa"
+import React, {  useState } from "react";
+
 interface SearchInputProps {
   value: string;
   onChange: (value:  React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const SearchInput = ()  => {
-    const [searchValue, setSearchValue] = useState("");
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchValue(event.target.value);
-      };
-
-  return (  
-    <div className="flex px-20 gap-2 flex-row m-2 w-full items-center">
- <input
-    className="flex rounded-3xl  h-20 text-black text-4xl w-full py-5 px-10 my-20 placeholder:text-xl placeholder:text-center"
-      type="text"   
-      value={searchValue}
-      placeholder="Search / Filter"
+const SearchInput = ({ value, onChange }: SearchInputProps)  => {
    
-      onChange={handleChange}
+  return (  
+    <div className="flex   gap-2 flex-row bg-black  w-full items-center">
+ <input
+    className="flex h-20 sm:scale-75 sm:w-full text-black sm:text-2xl lg:text-4xl w-full py-5 lg:px-10 my-10 placeholder:text-3xl placeholder:text-center"
+      type="text"   
+      value={value}
+      placeholder="Search / Filter"
+    
+      onChange={onChange}
     />
-    <div className="">
-    <FaSearch  size={50} color="white"/>
-    </div>
+   
     </div>
    
   );

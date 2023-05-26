@@ -1,90 +1,64 @@
+// Import required modules and components
 import React, { useEffect, useState } from "react";
-import { getUsers } from "./utils/api";
 import UserList from "./components/UserList";
-import SearchInput from "./components/SearchInput";
-import Pagination from "./components/pagination";
-import useUsers from "./hooks/useUsers";
-import {User } from "./utils/types"
-
 import {
-
   QueryClient,
   QueryClientProvider,
-} from '@tanstack/react-query'
-import { FaBeer, FaSpinner } from "react-icons/fa";
-// interface User {
-//   name: string;
-// }
+} from '@tanstack/react-query';
+import { MdWifiOff } from "react-icons/md";
+import useInternetConnectivity from "./hooks/InternetConnectivity";
+import { toast } from "react-toastify";
+import useStoredUsers from "./hooks/useStoredUsers";
+import Footer from "./components/Footer";
+import NavBar from "./components/NavBar";
+
+// Instantiate a new QueryClient
 const queryClient = new QueryClient();
 
-interface UserListProps {
-  users: User[];
-}
-
-
-
-
-
+// App component
 const App = () => {
-  const [page, setPage] = useState(1);
-  const [searchValue, setSearchValue] = useState("");
-  const [filteredData, setFilteredData] = useState("");
-  const  users = useUsers();
+  // State variables
+  const [filteredData, setFilteredData] = useState();
+  const [users] = useStoredUsers();
+  const { isOnline } = useInternetConnectivity();
 
-  const userLocal = [  { user_id: 1, display_name: "Alice", profile_image: "", reputation: 100 },
-  { user_id: 2, display_name: "Bob", profile_image: "", reputation: 200 },
-  { user_id: 3, display_name: "Charlie", profile_image: "", reputation: 300 },]
-
-
+  // Update the state when the online status changes
   useEffect(() => {
-    if (searchValue) {
-      const usersCopy = Object.assign([], users.users);
-      const results = usersCopy.filter((item) =>
-      // @ts-ignore
-        item.display_name.toLowerCase().includes(searchValue.toLowerCase())
-      );
-      console.log(results)
-      // @ts-ignore
-      setFilteredData(results);
+    if (isOnline) {
+      console.log('App is online');
+      toast("You are back online");
     } else {
-      // setFilteredData(data);
+      console.log('App is offline');
+      toast("Check internet connection");
     }
+  }, [isOnline]);
 
- 
-    console.log("Rendered on screen",  users)
-    console.log(searchValue)
-
-  }, [searchValue, users, queryClient]);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value);
-  };
-
-
+  // Render the App component
   return (
-
     <QueryClientProvider client={queryClient}>
-    <div className="flex flex-col bg-[#3D1152] h-screen mx-20 ">
-      <div className="px-20 pt-10 items-start justify-center">
-      <h1 className="font-bold text-4xl   text-[#33CFB7]">Top 20</h1>
-      <h1 className="font-bold text-4xl text-white ">StackOverflow</h1>
-      <h1 className="font-bold text-4xl text-white ">Users</h1>
-
-    
+      <div className="flex flex-col bg-white h-24 ">
+        {
+          isOnline
+            ? (
+              <div className="bg-black h-full">
+                <NavBar />
+                {/* @ts-ignore */}
+                <UserList users={users} />
+                <Footer />
+              </div>
+            )
+            : (
+              <div className="flex flex-row bg-black h-screen self-center justify-center items-center gap-2 align-middle">
+                <MdWifiOff color="white" size={25} className=" animate-pulse" />
+                <p className="flex items-center text-white font-bold">
+                  You are offline
+                </p>
+              </div>
+            )
+        }
       </div>
-    
-      <SearchInput  /> 
-
-      <UserList users={users.users} />
-     
-      {/* <Pagination page={page} totalPages={users.length} onPageChange={setPage} /> */}
-      <div className="h-36 mt-20 bg-black w-full items-center  bottom-0 right-0">
-        <p className="text-white font-medium text-center">Created by Brian Lemba</p>
-      </div>
-    </div>
-
     </QueryClientProvider>
-  );  
+  );
 };
 
 export default App;

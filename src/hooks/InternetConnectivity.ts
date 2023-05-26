@@ -1,10 +1,21 @@
 import { useState, useEffect } from "react";
+import {  toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const useInternetConnectivity = () => {
     const [isOnline, setIsOnline] = useState(navigator.onLine);
     useEffect(() => {
         // Update network status
         const handleStatusChange = () => {
+
+            if(isOnline) {
+                toast("You are offline")
+                console.log("You are offline")
+            }else {
+                toast("You are back online ")
+             }
+         
           setIsOnline(navigator.onLine);
         };
     
