@@ -20,7 +20,7 @@ const UserCard = ({ user }: any) => {
   const [followed, setFollowed] = useState(false);
   const [blocked, setBlocked] = useState(false);
 
-   // Toggle follow state
+  // Toggle follow state
   const toggleFollow = (user: string) => {
     setFollowed(!followed);
     if (!followed) {
@@ -30,7 +30,7 @@ const UserCard = ({ user }: any) => {
     }
   };
 
-  // Block or unblock a user
+  // Block a user
   const blockUser = (username: string) => {
     setBlocked(true);
     setFollowed(false);
