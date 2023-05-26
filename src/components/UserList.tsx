@@ -76,7 +76,7 @@ const UserList = ({ users }: any[]) => {
     >
       <SearchInput value={searchTerm} onChange={handleSearchChange} />
       {/* Render noResults message if there are no search results */}
-      {noResults ? (
+      {noResults && searchTerm !=="" ? (
         <div className="flex flex-col self-center">
           <p className="text-white text-xl font-bold">
             "{searchTerm}" User not found.
