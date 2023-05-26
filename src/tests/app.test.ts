@@ -6,10 +6,10 @@ import { render, screen } from '@testing-library/react'
 import fetchMock from 'jest-fetch-mock/types'
 
 describe('App', () => {
-    beforeEach( () => {
+    beforeEach(() => {
         fetchMock.resetMocks()
     })
 
-    test('renders a list of users from stackOverflow', async () => {})
-    test('renders error when API call fails', async () => {})
+    test('renders a list of users from stackOverflow', async () => { })
+    test('renders error when API call fails', async () => { })
 })

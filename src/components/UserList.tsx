@@ -34,7 +34,10 @@ const UserList = ({ users }: any[]) => {
   });
 
   // Search users by the searchTerm
-  const searchUsers = (searchTerm: string): User[] => users.filter((user: User) => user.display_name.toLowerCase().includes(searchTerm.toLowerCase()));
+  const searchUsers = (searchTerm: string): User[] =>
+    users.filter((user: User) =>
+      user.display_name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
   // Update searchResults state when searchTerm or searchUsers function changes
   useEffect(() => {
@@ -72,11 +75,18 @@ const UserList = ({ users }: any[]) => {
   };
 
   // Calculate paginatedData based on the currentPage
-  const paginatedData = searchResults.slice((currentPage - 1) * 8, currentPage * 8);
+  const paginatedData = searchResults.slice(
+    (currentPage - 1) * 8,
+    currentPage * 8
+  );
 
   // Render the UserList component
   return (
-    <div className={`flex flex-col ${isLoading ? "hidden" : ""} lg:px-20 bg-black w-full pb-5`}>
+    <div
+      className={`flex flex-col ${
+        isLoading ? "hidden" : ""
+      } lg:px-20 bg-black w-full pb-5`}
+    >
       <SearchInput value={searchTerm} onChange={handleSearchChange} />
       {/* Render noResults message if there are no search results */}
       {noResults ? (
@@ -110,7 +120,6 @@ const UserList = ({ users }: any[]) => {
         pauseOnHover
         theme="colored"
       />
- 
     </div>
   );
 };
