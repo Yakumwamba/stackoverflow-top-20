@@ -40,7 +40,7 @@ const UserCard = ({ user }: any) => {
     }
   };
 
-   // Toggle expanded state when not blocked
+  // Toggle expanded state when not blocked
   const onClickUser = () => {
     if (!blocked) {
       setExpanded(!expanded);

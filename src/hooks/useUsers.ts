@@ -7,9 +7,8 @@ const useUsers = () => {
 
   useEffect(() => {
     getUsers().then((data) => {
-      
-      setUsers(data)
-      // return setUsers(data);
+      // setUsers(data)
+       return setUsers(data);
     });
   }, []);
 

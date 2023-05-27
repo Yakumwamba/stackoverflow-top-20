@@ -1,61 +1,91 @@
-
-
 // Import required modules and components
-import  { useEffect } from "react";
+
 import UserList from "./components/UserList";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { MdWifiOff } from "react-icons/md";
+import { FaSpinner, FaSave } from "react-icons/fa";
 import useInternetConnectivity from "./hooks/InternetConnectivity";
 
 import useStoredUsers from "./hooks/useStoredUsers";
 import Footer from "./components/Footer";
 import NavBar from "./components/NavBar";
-import useUsers from "./hooks/useUsers";
-
-
-// Instantiate a new QueryClient
-const queryClient = new QueryClient();
+import { getUsers } from "./api/api";
 
 // App component
 const App = () => {
   // State variables
 
-  
-   const users = useUsers()
-   const [cachedUsers] = useStoredUsers();
-    const { isOnline } = useInternetConnectivity();
+  const [cachedUsers] = useStoredUsers();
+  const { isOnline } = useInternetConnectivity();
 
-  // Update the state when the online status changes
-  useEffect(() => {
-    console.log("Internet connectivity", isOnline)
-    console.log("These are the cached users",cachedUsers)
-  }, [isOnline, cachedUsers]);
+  // const query = useQuery({ queryKey: ['todos'], queryFn: getUsers })
+  const { isLoading, isError, data, error } = useQuery({
+    queryKey: ["users"],
+    queryFn: getUsers,
+  });
+
+  if (isLoading && isOnline) {
+    return (
+      <div className="flex flex-row bg-black h-screen self-center justify-center items-center w-full gap-2 align-middle">
+        <FaSpinner color="white" size={25} className=" animate-spin" />
+        <p className="flex items-center text-white font-bold">
+          Loading users...
+        </p>
+      </div>
+    );
+  }
+
+  if (isError as any) {
+    //@ts-ignore
+    return <span>Error: {error.message}</span>;
+  }
+
+  if (error) {
+    console.log("There was an error");
+  }
+
+  const loadCache = () => {
+    console.log("Loading from cache", cachedUsers);
+  };
 
   // Render the App component
   return (
-    <QueryClientProvider client={queryClient}>
+    <div className="flex flex-col bg-white h-screen ">
+      {(isOnline && data?.length !==0 ) || cachedUsers.length !==0? (
+        <div className="bg-black h-full">
+          <NavBar />
+          {cachedUsers.length !== 0 ? (
+            <div className="flex flex-col">
+              <UserList users={cachedUsers} />
+              <div className="flex fixed bottom-0 right-0 w-auto h-auto bg-gray-500">
+                <p className=" p-5 text-white text-lg font-medium">
+                  Using cached data
+                </p>
+              </div>
+            </div>
+          ) : (
+            <UserList users={data || []} />
+          )}
 
-
-
-      <div className="flex flex-col bg-white h-screen ">
-        {isOnline ? (
-          <div className="bg-black h-full">
-            <NavBar />
-            {/* @ts-ignore */}
-            { cachedUsers ?  <UserList users={cachedUsers} /> :  <UserList users={users.users} />}
-           
-            <Footer />
-          </div>
-        ) : (
-          <div className="flex flex-row bg-black h-screen self-center justify-center items-center w-full gap-2 align-middle">
-            <MdWifiOff color="white" size={25} className=" animate-pulse" />
-            <p className="flex items-center text-white font-bold">
-              You are offline
-            </p>
-          </div>
-        )}
-      </div>
-    </QueryClientProvider>
+          <Footer />
+        </div>
+      ) : (
+        <div className="flex flex-row bg-black h-screen self-center justify-center items-center w-full gap-2 align-middle">
+          <MdWifiOff color="white" size={25} className=" animate-pulse" />
+          <p className="flex items-center text-white font-bold">
+            You are offline
+          </p>
+          <button
+            className={`text-white ${
+              cachedUsers.length !== 0 ? "" : "hidden"
+            } flex flex-row gap-2 items-center font-bold text-sm bg-primary p-3 `}
+            onClick={loadCache}
+          >
+            <FaSave size={25} color="white" /> Load Cache
+          </button>
+        </div>
+      )}
+    </div>
   );
 };
 

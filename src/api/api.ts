@@ -18,11 +18,11 @@ export interface ApiResponse {
 //returning the users 
 
 
-export const getUsers = async (): Promise<User[]> => {
+export const getUsers = async () => {
   const proxyUrl = "https://my-cors-proxy.herokuapp.com/";
   const apiUrl = "https://api.stackexchange.com/2.2/users?pagesize=20&order=desc&sort=reputation&site=stackoverflow";
   // Check if the users array exists in localStorage
-   const storedUsers = localStorage.getItem("users");
+  const storedUsers = localStorage.getItem("users");
   if (storedUsers !== null) {
     // If users are found in localStorage, return the stored users
     const items: User[] = JSON.parse(storedUsers);
@@ -31,7 +31,11 @@ export const getUsers = async (): Promise<User[]> => {
 
   // If users are not found in localStorage, fetch the data from the API
   const response = await fetch(
+<<<<<<< HEAD
     "https://api.stackexchange.com/2.2/users?pagesize=20&order=desc&sort=reputation&site=stackoverflow&proxy=https://my-cors-proxy.herokuapp.com/"
+=======
+   "https://api.stackexchange.com/2.2/users?pagesize=20&order=desc&sort=reputation&site=stackoverflow&proxy=https://my-cors-proxy.herokuapp.com/"
+>>>>>>> b10b219 (Updates SearchInput)
   );
 
   if (response.status !== 200) {
@@ -39,7 +43,6 @@ export const getUsers = async (): Promise<User[]> => {
   }
 
   const data = await response.json();
-  console.log("List of users => ", data);
   const items: User[] = data.items.map((item: any) => ({
     user_id: item.user_id,
     display_name: item.display_name,
@@ -47,8 +50,10 @@ export const getUsers = async (): Promise<User[]> => {
     reputation: item.reputation,
 
   }));
+
   localStorage.setItem("users", JSON.stringify(items));
   return await items;
+  
 };
 
 

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { toast } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
 
-
+  
 const useInternetConnectivity = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   useEffect(() => {
