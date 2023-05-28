@@ -31,11 +31,7 @@ export const getUsers = async () => {
 
   // If users are not found in localStorage, fetch the data from the API
   const response = await fetch(
-<<<<<<< HEAD
     "https://api.stackexchange.com/2.2/users?pagesize=20&order=desc&sort=reputation&site=stackoverflow&proxy=https://my-cors-proxy.herokuapp.com/"
-=======
-   "https://api.stackexchange.com/2.2/users?pagesize=20&order=desc&sort=reputation&site=stackoverflow&proxy=https://my-cors-proxy.herokuapp.com/"
->>>>>>> b10b219 (Updates SearchInput)
   );
 
   if (response.status !== 200) {
