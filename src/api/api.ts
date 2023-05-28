@@ -18,12 +18,11 @@ export interface ApiResponse {
 //returning the users 
 
 
-export const getUsers = async () => {
-  const proxyUrl = "https://my-cors-proxy.herokuapp.com/";
-  const apiUrl = "https://api.stackexchange.com/2.2/users?pagesize=20&order=desc&sort=reputation&site=stackoverflow";
+export const getUsers = async () =>  {
+
   // Check if the users array exists in localStorage
   const storedUsers = localStorage.getItem("users");
-  if (storedUsers !== null) {
+  if (storedUsers !== null && storedUsers.length !==0 ) {
     // If users are found in localStorage, return the stored users
     const items: User[] = JSON.parse(storedUsers);
     return items;

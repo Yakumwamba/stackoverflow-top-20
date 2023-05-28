@@ -11,6 +11,7 @@ import Footer from "./components/Footer";
 import NavBar from "./components/NavBar";
 import { getUsers } from "./api/api";
 
+
 // App component
 const App = () => {
   // State variables
@@ -40,6 +41,10 @@ const App = () => {
     return <span>Error: {error.message}</span>;
   }
 
+  if( data ) {
+    console.log(data)
+  }
+
   if (error) {
     console.log("There was an error");
   }
@@ -47,46 +52,53 @@ const App = () => {
   const loadCache = () => {
     console.log("Loading from cache", cachedUsers);
   };
-
+  const OfflineComponent = () => (
+    <div className="flex flex-row bg-black h-screen self-center justify-center items-center w-full gap-2 align-middle">
+      <MdWifiOff color="white" size={25} className=" animate-pulse" />
+      <p className="flex items-center text-white font-bold">You are offline</p>
+      <button
+        className={`text-white ${
+          cachedUsers.length !== 0 ? "" : "hidden"
+        } flex flex-row gap-2 items-center font-bold text-sm bg-primary p-3 `}
+        onClick={loadCache}
+      >
+        <FaSave size={25} color="white" /> Load Cache
+      </button>
+    </div>
+  );
   // Render the App component
   return (
     <div className="flex flex-col bg-white h-screen ">
-      {(isOnline && data?.length !==0 ) || cachedUsers.length !==0? (
+    {isOnline ? (
+      data?.length !== 0 ? (
         <div className="bg-black h-full">
           <NavBar />
-          {cachedUsers.length !== 0 ? (
-            <div className="flex flex-col">
-              <UserList users={cachedUsers} />
-              <div className="flex fixed bottom-0 right-0 w-auto h-auto bg-gray-500">
-                <p className=" p-5 text-white text-lg font-medium">
-                  Using cached data
-                </p>
-              </div>
-            </div>
-          ) : (
-            <UserList users={data || []} />
-          )}
-
+          <UserList users={data || []} />
           <Footer />
+
         </div>
       ) : (
-        <div className="flex flex-row bg-black h-screen self-center justify-center items-center w-full gap-2 align-middle">
-          <MdWifiOff color="white" size={25} className=" animate-pulse" />
-          <p className="flex items-center text-white font-bold">
-            You are offline
-          </p>
-          <button
-            className={`text-white ${
-              cachedUsers.length !== 0 ? "" : "hidden"
-            } flex flex-row gap-2 items-center font-bold text-sm bg-primary p-3 `}
-            onClick={loadCache}
-          >
-            <FaSave size={25} color="white" /> Load Cache
-          </button>
-        </div>
-      )}
-    </div>
-  );
+        cachedUsers.length !== 0 ? (
+          <div className="bg-black h-full">
+            <NavBar />
+            <UserList users={cachedUsers} />
+            <Footer />
+            <div className="flex fixed bottom-0 right-0 w-auto h-auto bg-gray-500">
+              <p className=" p-5 text-white text-lg font-medium">
+                Using cached data
+              </p>
+            </div>
+          </div>
+        ) : (
+          <OfflineComponent />
+        )
+      )
+    ) : (
+      <OfflineComponent />
+    )}
+
+    
+  </div> );
 };
 
 export default App;

@@ -1,33 +1,31 @@
 import { useState, useEffect } from "react";
 
-import 'react-toastify/dist/ReactToastify.css';
-
-  
 const useInternetConnectivity = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+  const setOffline = () => {
+    console.log("Offline event triggered");
+    setIsOnline(false);
+  };
+
+  const setOnline = () => {
+    console.log("Online event triggered");
+    setIsOnline(true);
+  };
+
   useEffect(() => {
-    // Update network status
-    const handleStatusChange = () => {
+    console.log("Initial isOnline value:", isOnline);
 
-      setIsOnline(navigator.onLine);
-    };
+    window.addEventListener("offline", setOffline);
+    window.addEventListener("online", setOnline);
 
-    // Listen to the online status
-    window.addEventListener('online', handleStatusChange);
-
-    // Listen to the offline status
-    window.addEventListener('offline', handleStatusChange);
-
-    // Specify how to clean up after this effect for performance improvment
     return () => {
-      window.removeEventListener('online', handleStatusChange);
-      window.removeEventListener('offline', handleStatusChange);
+      window.removeEventListener("offline", setOffline);
+      window.removeEventListener("online", setOnline);
     };
   }, [isOnline]);
 
-  return {
-    isOnline,
-  };
+  return { isOnline };
 };
 
 export default useInternetConnectivity;
