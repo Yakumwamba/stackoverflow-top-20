@@ -69,7 +69,7 @@ const App = () => {
   // Render the App component
   return (
     <div className="flex flex-col bg-white h-screen ">
-    {isOnline ? (
+   {(
       data?.length !== 0 ? (
         <div className="bg-black h-full">
           <NavBar />
@@ -93,9 +93,7 @@ const App = () => {
           <OfflineComponent />
         )
       )
-    ) : (
-      <OfflineComponent />
-    )}
+    ) }
 
     
   </div> );
