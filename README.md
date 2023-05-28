@@ -4,6 +4,8 @@ This application fetches the top 20 Stack Overflow users and displays them using
 
 Please note that the follow and block buttons in the application do not make any API calls, and they are only indicators for simulation purposes.
 
+
+## ** Demo ** -> https:stackoverflow-top-20.vercel.com
 ## **Prerequisites**
 
 - Node version 18
@@ -15,8 +17,8 @@ Please note that the follow and block buttons in the application do not make any
 
 1. Ensure that you have Node.js version 18 installed. You can use ~~[nvm](https://github.com/nvm-sh/nvm)~~ to manage your Node.js versions:
 
-`nvm install 18
-nvm use 18`
+`nvm install 18`
+`nvm use 18`
 
 2. Install the dependencies:
 
