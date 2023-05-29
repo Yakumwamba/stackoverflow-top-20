@@ -25,7 +25,7 @@ const App = () => {
     queryFn: getUsers,
   });
 
-  if (isLoading && isOnline) {
+  if (isLoading ) {
     return (
       <div className="flex flex-row bg-black h-screen self-center justify-center items-center w-full gap-2 align-middle">
         <FaSpinner color="white" size={25} className=" animate-spin" />
@@ -70,7 +70,7 @@ const App = () => {
   return (
     <div className="flex flex-col bg-white h-screen ">
    {(
-      data?.length !== 0 ? (
+      data?.length !== 0 && isOnline ? (
         <div className="bg-black h-full">
           <NavBar />
           <UserList users={data || []} />
@@ -78,7 +78,7 @@ const App = () => {
 
         </div>
       ) : (
-        cachedUsers.length !== 0 ? (
+        cachedUsers.length !== 0 && !isOnline ? (
           <div className="bg-black h-full">
             <NavBar />
             <UserList users={cachedUsers} />
