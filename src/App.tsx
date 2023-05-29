@@ -19,25 +19,29 @@ const App = () => {
   // State variables
 
   const [cachedUsers] = useStoredUsers();
-  const { isOnline } = useInternetConnectivity();
+  // const { isOnline } = useInternetConnectivity();
   const [users, setUsers] = useState<User[]>([]);
+  const [isLoading, setIsLoading] = useState(false)
 
 
-   useEffect(() => {
+
+  useEffect(() => {
     const fetchUsers = async () => {
+      setIsLoading(true);
       try {
         const data = await getUsers();
         setUsers(data);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
     };
 
     fetchUsers();
-  }, [users]);
+  }, []);
 
 
-  if (users.length === 0) {
+  if (isLoading) {
     return (
       <div className="flex flex-row bg-black h-screen self-center justify-center items-center w-full gap-2 align-middle">
         <FaSpinner color="white" size={25} className=" animate-spin" />
@@ -70,13 +74,12 @@ const App = () => {
   // Render the App component
   return (
     <div className="flex flex-col bg-white h-screen ">
-   {(
+    {(
       users?.length !== 0 ? (
         <div className="bg-black h-full">
           <NavBar />
           <UserList users={users} />
           <Footer />
-
         </div>
       ) : (
         cachedUsers.length !== 0 ? (
@@ -86,18 +89,16 @@ const App = () => {
             <Footer />
             <div className="flex fixed bottom-0 right-0 w-auto h-auto bg-gray-500">
               <p className=" p-5 text-white text-lg font-medium">
-                Using cached data
-              </p>
-            </div>
+              Using cached data
+            </p>
           </div>
-        ) : (
-          <OfflineComponent />
-        )
+        </div>
+      ) : (
+        <OfflineComponent />
       )
-    ) }
-
-    
-  </div> );
+    ))}
+  </div>
+    )
 };
 
 
