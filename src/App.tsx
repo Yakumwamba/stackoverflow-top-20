@@ -10,6 +10,8 @@ import useStoredUsers from "./hooks/useStoredUsers";
 import Footer from "./components/Footer";
 import NavBar from "./components/NavBar";
 import { getUsers } from "./api/api";
+import { useEffect, useState } from "react";
+import { User } from "./types/types";
 
 
 // App component
@@ -18,14 +20,24 @@ const App = () => {
 
   const [cachedUsers] = useStoredUsers();
   const { isOnline } = useInternetConnectivity();
+  const [users, setUsers] = useState<User[]>([]);
 
-  // const query = useQuery({ queryKey: ['todos'], queryFn: getUsers })
-  const { isLoading, isError, data, error } = useQuery({
-    queryKey: ["users"],
-    queryFn: getUsers,
-  });
 
-  if (isLoading ) {
+   useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const data = await getUsers();
+        setUsers(data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+
+  if (users.length === 0) {
     return (
       <div className="flex flex-row bg-black h-screen self-center justify-center items-center w-full gap-2 align-middle">
         <FaSpinner color="white" size={25} className=" animate-spin" />
@@ -36,18 +48,7 @@ const App = () => {
     );
   }
 
-  if (isError as any) {
-    //@ts-ignore
-    return <span>Error: {error.message}</span>;
-  }
 
-  if( data ) {
-    console.log(data)
-  }
-
-  if (error) {
-    console.log("There was an error");
-  }
 
   const loadCache = () => {
     console.log("Loading from cache", cachedUsers);
@@ -70,16 +71,15 @@ const App = () => {
   return (
     <div className="flex flex-col bg-white h-screen ">
    {(
-        // @ts-ignore
-      data.length !== 0 && isOnline ? (
+      users?.length !== 0 ? (
         <div className="bg-black h-full">
           <NavBar />
-          <UserList users={data || []} />
+          <UserList users={users} />
           <Footer />
 
         </div>
       ) : (
-        cachedUsers.length !== 0 && !isOnline ? (
+        cachedUsers.length !== 0 ? (
           <div className="bg-black h-full">
             <NavBar />
             <UserList users={cachedUsers} />
@@ -99,5 +99,6 @@ const App = () => {
     
   </div> );
 };
+
 
 export default App;
