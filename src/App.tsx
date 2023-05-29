@@ -34,7 +34,7 @@ const App = () => {
     };
 
     fetchUsers();
-  }, []);
+  }, [users]);
 
 
   if (users.length === 0) {
