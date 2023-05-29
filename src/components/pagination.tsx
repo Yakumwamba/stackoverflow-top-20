@@ -35,7 +35,7 @@ const Pagination = ({
         <FaArrowCircleLeft size={20} />
         Previous
       </button>
-      <span className="sm:text-lg text-white lg:text-xl font-bold ">
+      <span className="sm:text-sm text-white lg:text-xl font-bold ">
         {currentPage} of {totalPages}
       </span>
 
