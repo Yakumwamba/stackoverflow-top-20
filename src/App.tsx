@@ -70,7 +70,8 @@ const App = () => {
   return (
     <div className="flex flex-col bg-white h-screen ">
    {(
-      data?.length !== 0 && isOnline ? (
+        // @ts-ignore
+      data.length !== 0 && isOnline ? (
         <div className="bg-black h-full">
           <NavBar />
           <UserList users={data || []} />
