@@ -15,10 +15,8 @@ const UserList = ({ users }: UserProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<User[]>([]);
-  const [noResults, setNoResults] = useState(false);
-  // Use the useQuery hook to fetch users
 
-  // Search users by the searchTerm - Now using useCallback - THIS WAS THE ISSUE EARLIER
+  // Search users by the searchTerm - Now using useCallback
   const searchUsers = useCallback(
     (searchTerm: string): User[] =>
       users.filter((user: User) =>
@@ -26,17 +24,11 @@ const UserList = ({ users }: UserProps) => {
       ),
     [users]
   );
-  //   // Update searchResults state when searchTerm or searchUsers function changes
+
+  // Update searchResults state when searchTerm or searchUsers function changes
   useEffect(() => {
     setSearchResults(searchUsers(searchTerm));
-    console.log("Searching user...", searchTerm);
-
-  }, [ searchTerm, searchUsers]);
-
-  // Set noResults state when searchResults array is empty
-  useEffect(() => {
-    setNoResults(searchResults.length === 0);
-  }, [searchResults.length, searchTerm]);
+  }, [searchTerm, searchUsers]);
 
   // Handle search input changes
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,7 +51,7 @@ const UserList = ({ users }: UserProps) => {
     <div className={`flex flex-col lg:px-20 bg-black w-full pb-5`}>
       <SearchInput value={searchTerm} onChange={handleSearchChange} />
       {/* Render noResults message if there are no search results */}
-      {noResults && searchTerm !=="" ? (
+      {searchResults.length === 0 && searchTerm !== "" ? (
         <div className="flex flex-col self-center">
           <p className="text-white text-xl font-bold">
             "{searchTerm}" User not found.
@@ -73,7 +65,7 @@ const UserList = ({ users }: UserProps) => {
       {/* Render Pagination component */}
       <Pagination
         currentPage={currentPage}
-        totalItems={users.length}
+        totalItems={searchResults.length} // Updated to use the length of searchResults
         itemsPerPage={8}
         onPageChange={handlePageChange}
       />
