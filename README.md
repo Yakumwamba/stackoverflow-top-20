@@ -5,7 +5,7 @@ This application fetches the top 20 Stack Overflow users and displays them using
 Please note that the follow and block buttons in the application do not make any API calls, and they are only indicators for simulation purposes.
 
 
-##  [Demo](https:stackoverflow-top-20.vercel.com)
+##  [Demo](https://stackoverflow-top-20.vercel.com)
 ## **Prerequisites**
 
 - Node version 18
